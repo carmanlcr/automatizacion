@@ -26,12 +26,20 @@ public class Automatizado {
 		/*InputWrite("cj_clave","lmorales13",driver,260); //Campo de login
 		InputWrite("cj_contrasena","CAR22MAN05",driver,100); //Campo Password*/
 		
-		clicButton("btn_iniciarsesion", driver);
-		Thread.sleep(2000);
+		clicButton("btn_registrar", driver);
+		Thread.sleep(1000);
+		
+		//Registrar usuario
+		register(driver);
+		Thread.sleep(1340);
+		
+		clicButton("check", driver); //Para mostrar el contenido del boton cerrar sesion
+		clicButton("cerrarsesion", driver); //Para cerrar la sesion luego de haber iniciado
+		clicButton("btn_iniciarsesion", driver); //Para iniciar sesion nuevamente luego de registrarse
 		
 		//Iniciar sesion
 		login(driver);
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		
 		driver.quit();
 
@@ -55,12 +63,21 @@ public class Automatizado {
 	}
 	
 	protected static void login(WebDriver driver) throws InterruptedException {
-		inputWrite("username", "soyleydimar", driver, 200);
+		inputWrite("username", "donaflorinda", driver, 200);
 		Thread.sleep(1000);
 		inputWrite("password", "LAMS2205", driver, 100);
 		Thread.sleep(1000);
 		clicButton("btn_ingresar",driver);
 	}
 
+	protected static void register(WebDriver driver) throws InterruptedException{
+		inputWrite("nombre", "Luis", driver, 120);
+		inputWrite("apellido", "Morales", driver, 120);
+		inputWrite("email", "donaflorinda@goprint.pe", driver, 120);
+		inputWrite("username", "donaflorinda", driver, 120);
+		inputWrite("password", "LAMS2205", driver, 120);
+		inputWrite("password-confirm", "LAMS2205", driver, 120);
+		clicButton("registrar",driver);
+	}
 
 }
