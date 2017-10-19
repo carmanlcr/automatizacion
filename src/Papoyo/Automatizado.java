@@ -9,10 +9,11 @@ import com.sun.jna.platform.win32.WinUser.INPUT;
 
 public class Automatizado {
 	public static void main(String[] args) throws InterruptedException {
-		//Lanzamiento de pagina
-		String exePath = "C:\\Users\\LSMORALES\\Documents\\Selenium\\Automatización\\chromedriver.exe"; //Ruta donde esta el archivo chromdrive
+		
+		String exePath = "C:\\Users\\lmorales\\Documents\\Universidad\\Interfaces con el Usuario\\chromedriver.exe"; //Ruta donde esta el archivo chromdrive
 		System.setProperty("webdriver.chrome.driver", exePath);
 		
+		//Lanzamiento de pagina
 		WebDriver driver = new ChromeDriver(); //Instancia de Chroma Driver
 		
 		
@@ -33,13 +34,23 @@ public class Automatizado {
 		register(driver);
 		Thread.sleep(1340);
 		
-		clicButton("check", driver); //Para mostrar el contenido del boton cerrar sesion
-		clicButton("cerrarsesion", driver); //Para cerrar la sesion luego de haber iniciado
-		clicButton("btn_iniciarsesion", driver); //Para iniciar sesion nuevamente luego de registrarse
+		closeSesion(driver);
+		clicButton("btn_iniciarsesion", driver); //Para iniciar sesion 
 		
 		//Iniciar sesion
 		login(driver);
 		Thread.sleep(1000);
+		
+		closeSesion(driver);
+		clicButton("btn_iniciarsesion", driver); //Para iniciar sesion 
+		
+		String habilitado = "close";
+		WebElement elemento = driver.findElement(By.className(habilitado));
+		boolean status = elemento.isEnabled();
+		
+		System.out.println("El elemento esta "+status);
+		Thread.sleep(5000);
+		
 		
 		driver.quit();
 
@@ -78,6 +89,11 @@ public class Automatizado {
 		inputWrite("password", "LAMS2205", driver, 120);
 		inputWrite("password-confirm", "LAMS2205", driver, 120);
 		clicButton("registrar",driver);
+	}
+	
+	protected static void closeSesion(WebDriver driver) throws InterruptedException{
+		clicButton("check", driver); //Para mostrar el contenido del boton cerrar sesion
+		clicButton("cerrarsesion", driver); //Para cerrar la sesion luego de haber iniciado
 	}
 
 }
