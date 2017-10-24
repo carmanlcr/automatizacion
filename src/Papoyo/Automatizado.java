@@ -1,11 +1,10 @@
-package Papoyo;
+package pApoyo;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-import com.sun.jna.platform.win32.WinUser.INPUT;
+import pApoyo.LoremIpsum;
 
 public class Automatizado {
 	public static void main(String[] args) throws InterruptedException {
@@ -16,7 +15,8 @@ public class Automatizado {
 		//Lanzamiento de pagina
 		WebDriver driver = new ChromeDriver(); //Instancia de Chroma Driver
 		
-		
+		//
+		LoremIpsum li = new LoremIpsum();
 		driver.get("http://localhost:8000/"); //Lanzamiento de la pagina
 		
 		System.out.println("El navegador se inicio correctamente");
@@ -27,7 +27,8 @@ public class Automatizado {
 		/*InputWrite("cj_clave","lmorales13",driver,260); //Campo de login
 		InputWrite("cj_contrasena","CAR22MAN05",driver,100); //Campo Password*/
 		
-		clicButton("btn_registrar", driver);
+		
+		clickButton("btn_registrar", driver);
 		Thread.sleep(1000);
 		
 		//Registrar usuario
@@ -35,23 +36,43 @@ public class Automatizado {
 		Thread.sleep(1340);
 		
 		closeSesion(driver);
-		clicButton("btn_iniciarsesion", driver); //Para iniciar sesion 
+		clickButton("btn_iniciarsesion", driver); //Para iniciar sesion 
 		
 		//Iniciar sesion
 		login(driver);
 		Thread.sleep(1000);
 		
 		closeSesion(driver);
-		clicButton("btn_iniciarsesion", driver); //Para iniciar sesion 
+		clickButton("btn_iniciarsesion", driver); //Para iniciar sesion 
 		
+		
+		//Validar si un un elemento esta habilitado
 		String habilitado = "close";
 		WebElement elemento = driver.findElement(By.className(habilitado));
 		boolean status = elemento.isEnabled();
 		
 		System.out.println("El elemento esta "+status);
-		Thread.sleep(5000);
+		
+		Thread.sleep(5000); //Espera de los 5 segundos
 		
 		
+		driver.navigate().back(); //Ir a la pagina de atras 
+		
+		
+		clickButton("contacto", driver); //Ir a otra pagina del sitio
+		
+		//refrescar la pagina
+		driver.navigate().refresh();
+		
+		
+		//Registro de formulario
+		inputWrite("nombre", "Luis Morales", driver, 250);
+		inputWrite("correo", "lmorales@goprint.pe", driver, 250);
+		inputWrite("asunto", "Caso de prueba", driver, 250);
+		inputWrite("mensaje", li.paragraph(), driver, 100);
+		Thread.sleep(750);
+		
+		clickButton("boton", driver);
 		driver.quit();
 
 	}
@@ -68,7 +89,7 @@ public class Automatizado {
 		}
 	}
 	
-	public static void clicButton(String id_button,WebDriver driver) {
+	public static void clickButton(String id_button,WebDriver driver) {
 		WebElement boton_aceptar = driver.findElement(By.id(id_button));
 		boton_aceptar.click();
 	}
@@ -78,22 +99,22 @@ public class Automatizado {
 		Thread.sleep(1000);
 		inputWrite("password", "LAMS2205", driver, 100);
 		Thread.sleep(1000);
-		clicButton("btn_ingresar",driver);
+		clickButton("btn_ingresar",driver);
 	}
 
 	protected static void register(WebDriver driver) throws InterruptedException{
 		inputWrite("nombre", "Luis", driver, 120);
 		inputWrite("apellido", "Morales", driver, 120);
-		inputWrite("email", "donaflorinda@goprint.pe", driver, 120);
-		inputWrite("username", "donaflorinda", driver, 120);
+		inputWrite("email", "sdad@goprint.pe", driver, 120);
+		inputWrite("username", "asdasd", driver, 120);
 		inputWrite("password", "LAMS2205", driver, 120);
 		inputWrite("password-confirm", "LAMS2205", driver, 120);
-		clicButton("registrar",driver);
+		clickButton("registrar",driver);
 	}
 	
 	protected static void closeSesion(WebDriver driver) throws InterruptedException{
-		clicButton("check", driver); //Para mostrar el contenido del boton cerrar sesion
-		clicButton("cerrarsesion", driver); //Para cerrar la sesion luego de haber iniciado
+		clickButton("check", driver); //Para mostrar el contenido del boton cerrar sesion
+		clickButton("cerrarsesion", driver); //Para cerrar la sesion luego de haber iniciado
 	}
 
 }
